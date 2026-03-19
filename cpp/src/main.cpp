@@ -3,11 +3,9 @@
 
 #include "frame_io.h"
 #include "display.h"
+#include "processor.h"
 
 namespace fs = std::filesystem;
-
-// Scans the directory and returns the path of all png files
-
 
 int main(){
   std::string dataset_path = "datasets/pedestrian/";
@@ -22,8 +20,12 @@ int main(){
          std::cerr<< "Failed to load " << filepath << std::endl;
          continue;
      }
+     cv::Mat frame8 = converTo8bit(frame);
 
-     displayFrames(frame, "Thermal player");
+     cv::Mat processed = adjustContrast(frame8, 2.0, 0);
+
+     displayFrames(frame8, "Raw");
+     displayFrames(processed,"Processed");
 
      if (cv::waitKey(30) == 'q') break;
   }

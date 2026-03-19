@@ -13,5 +13,6 @@ add_executable(thermal_app
     src/main.cpp
     src/frame_io.cpp
     src/display.cpp
+    src/processor.cpp
 )
 target_link_libraries(thermal_app ${OpenCV_LIBS} stdc++fs)
