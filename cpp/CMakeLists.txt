@@ -8,4 +8,4 @@ find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_executable(thermal_app src/main.cpp)
-target_link_libraries(thermal_app ${OpenCV_LIBS})
+target_link_libraries(thermal_app ${OpenCV_LIBS} stdc++fs)
