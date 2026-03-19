@@ -20,12 +20,18 @@ int main(){
          std::cerr<< "Failed to load " << filepath << std::endl;
          continue;
      }
+     // Convert to 8bit
      cv::Mat frame8 = converTo8bit(frame);
 
-     cv::Mat processed = adjustContrast(frame8, 2.0, 0);
+     // Added contrast
+     cv::Mat contrasted = adjustContrast(frame8, 2.0, 0);
+
+     // Polarity
+     cv::Mat polarized = applyPolarity(contrasted,false);
 
      displayFrames(frame8, "Raw");
-     displayFrames(processed,"Processed");
+     displayFrames(contrasted,"Contrasted");
+     displayFrames(polarized,"Polarized");
 
      if (cv::waitKey(30) == 'q') break;
   }

@@ -1,4 +1,5 @@
 #include "processor.h"
+#include <tuple>
 
 
 cv::Mat converTo8bit(const cv::Mat& frame){
@@ -9,5 +10,11 @@ cv::Mat converTo8bit(const cv::Mat& frame){
 cv::Mat adjustContrast(const cv::Mat& frame, double alpha, double beta){
     cv::Mat result;
     frame.convertTo(result, -1, alpha, beta);
+    return result;
+}
+cv::Mat applyPolarity(const cv::Mat &frame, bool white_hot){
+    if (white_hot) return frame;
+    cv::Mat result;
+    cv::bitwise_not(frame, result);
     return result;
 }
