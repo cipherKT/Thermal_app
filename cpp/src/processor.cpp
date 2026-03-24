@@ -18,3 +18,20 @@ cv::Mat applyPolarity(const cv::Mat &frame, bool white_hot){
     cv::bitwise_not(frame, result);
     return result;
 }
+cv::Mat applyGaussianFilter(const cv::Mat &frame, int kernel_size){ // Kernel size should be odd number
+    if (kernel_size % 2 != 1){
+        std::cerr<< "Kernel size needs to be odd, got: " << kernel_size << std::endl;
+        return cv::Mat();
+    }
+    cv::Mat result;
+    cv::GaussianBlur(frame, result, cv::Size(kernel_size, kernel_size), 0);
+    return result;
+}
+cv::Mat applyMedianFilter(const cv::Mat &frame, int kernel_size){
+    if (kernel_size % 2 != 1){
+        std::cerr<< "Kernel size needs to be odd, got: " << kernel_size << std::endl;
+        return cv::Mat();
+    }   cv::Mat result;
+    cv::medianBlur(frame, result, kernel_size);
+    return result;
+}
