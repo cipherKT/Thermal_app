@@ -15,11 +15,28 @@ Designed for Linux desktop first, with future extension to Android, iOS, and FPG
 
 ## Current Pipeline
 ```
-16-bit frame → Bad Pixel Correction → convertTo8bit → Noise Filter → Contrast/Brightness → Polarity → Display
+16-bit frame → BPC → convertTo8bit → AGC → Noise Filter → Contrast → Polarity → Color Map → Overlay → Display
 ```
+
+## Completed
+- [x] Frame loading from folder
+- [x] Bad pixel detection and correction
+- [x] AGC with histogram percentile clipping
+- [x] Noise filtering (Gaussian and Median)
+- [x] Contrast and brightness adjustment
+- [x] Polarity control (white-hot / black-hot)
+- [x] Color mapping (Grey, Hot, Inferno, Plasma, Winter, Jet, Rainbow)
+- [x] Overlay system (reticle, grid, FPS, timestamp)
+
+## Upcoming
+- [ ] Recording
+- [ ] NUC (Non-Uniformity Correction)
+- [ ] Flutter UI
+- [ ] USB streaming
+- [ ] Object detection
 
 ## TODO
 
 ### FPGA Migration
-- [ ] Replace dynamic bad pixel detection with hardware calibration technique (uniform temperature source / shutter-based calibration)
-- [ ] Convert bad pixel map file format from `.txt` to binary for faster load and compact storage on embedded target
+- [ ] Replace dynamic bad pixel detection with hardware calibration technique
+- [ ] Convert bad pixel map file format from `.txt` to binary
