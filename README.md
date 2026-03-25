@@ -40,3 +40,4 @@ Designed for Linux desktop first, with future extension to Android, iOS, and FPG
 ### FPGA Migration
 - [ ] Replace dynamic bad pixel detection with hardware calibration technique
 - [ ] Convert bad pixel map file format from `.txt` to binary
+- [ ] MP4/H264 recording support (requires OpenCV built from source with x264)

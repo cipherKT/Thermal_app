@@ -1,14 +1,13 @@
 #include <iostream>
 #include <chrono>
 #include <opencv2/opencv.hpp>
-#include <ratio>
-#include <stdexcept>
 
 #include "frame_io.h"
 #include "display.h"
 #include "processor.h"
 #include "bad_pixel.h"
 #include "overlay.h"
+#include "recorder.h"
 
 namespace fs = std::filesystem;
 
@@ -34,6 +33,7 @@ int main(){
       saveBadPixelMap(bad_pixels,bpc_map_path);
   }
 
+  // overlay config
   OverlayConfig overlay_config;
   overlay_config.show_reticle = true;
   overlay_config.show_grid = true;
@@ -41,6 +41,9 @@ int main(){
   overlay_config.show_timestamp = true;
   overlay_config.reticle_style = ReticleStyle::TACTICAL;
   overlay_config.color = cv::Scalar(0,255,0);
+
+  // recorder
+  Recorder recorder("output.avi", 30.0, cv::Size(512,512));
 
   // display loop
   for (const auto&filepath: frame_paths){
@@ -63,10 +66,23 @@ int main(){
 
      drawOverlay(colored,overlay_config, fps);
 
+     if (recorder.isRecording()){
+         recorder.writeFrame(colored);
+     }
+
      displayFrames(corrected_8bit, "Raw");
      displayFrames(colored,"processed");
 
-     if (cv::waitKey(30) == 'q') break;
+     int key = cv::waitKey(30);
+     if (key == 'q') break;
+     if (key == 'r'){
+         if (recorder.isRecording()){
+             recorder.stop();
+         }
+         else {
+             recorder.start();
+         }
+     }
   }
 
   cv::destroyAllWindows();

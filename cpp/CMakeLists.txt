@@ -16,5 +16,6 @@ add_executable(thermal_app
     src/processor.cpp
     src/bad_pixel.cpp
     src/overlay.cpp
+    src/recorder.cpp
 )
 target_link_libraries(thermal_app ${OpenCV_LIBS} stdc++fs)
