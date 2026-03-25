@@ -39,22 +39,14 @@ int main(){
          std::cerr<< "Failed to load " << filepath << std::endl;
          continue;
      }
-     // Convert to 8bit
-     cv::Mat frame_8bit = converTo8bit(frame);
 
-     // Applying Gaussian blur
-     cv::Mat filtered = applyGaussianFilter(frame_8bit,5);
+     cv::Mat corrected = correctBadPixels(frame, bad_pixels);
+     cv::Mat corrected_8bit = converTo8bit(corrected);
+     cv::Mat contrasted = adjustContrast(corrected_8bit,2.0,0);
+     cv::Mat polarized = applyPolarity(contrasted,false);
 
-     // Added contrast
-     cv::Mat contrasted = adjustContrast(filtered, 2.0, 0);
-
-     // Polarity
-     cv::Mat polarized = applyPolarity(filtered,false);
-
-     displayFrames(frame_8bit, "Raw");
-     displayFrames(filtered, "Gaussian blurred");
-     // displayFrames(contrasted,"Contrasted");
-     // displayFrames(polarized,"Polarized");
+     displayFrames(corrected_8bit, "Raw");
+     displayFrames(polarized,"Processed");
 
      if (cv::waitKey(30) == 'q') break;
   }

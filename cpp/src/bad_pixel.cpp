@@ -41,7 +41,7 @@ std::vector<BadPixel> detectBadPixels(const std::vector<cv::Mat>&frames, float t
     return bad_pixels;
 }
 
-cv::Mat correctBadPixels(const cv::Mat frame, const std::vector<BadPixel> &bad_pixels){
+cv::Mat correctBadPixels(const cv::Mat &frame, const std::vector<BadPixel> &bad_pixels){
     cv::Mat result = frame.clone();
 
     for (const auto &bp: bad_pixels){
