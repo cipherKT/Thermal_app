@@ -27,9 +27,9 @@ Designed for Linux desktop first, with future extension to Android, iOS, and FPG
 - [x] Polarity control (white-hot / black-hot)
 - [x] Color mapping (Grey, Hot, Inferno, Plasma, Winter, Jet, Rainbow)
 - [x] Overlay system (reticle, grid, FPS, timestamp)
+- [x] Recording
 
 ## Upcoming
-- [ ] Recording
 - [ ] NUC (Non-Uniformity Correction)
 - [ ] Flutter UI
 - [ ] USB streaming
