@@ -42,11 +42,10 @@ int main(){
 
      cv::Mat corrected = correctBadPixels(frame, bad_pixels);
      cv::Mat corrected_8bit = converTo8bit(corrected);
-     cv::Mat contrasted = adjustContrast(corrected_8bit,2.0,0);
-     cv::Mat polarized = applyPolarity(contrasted,false);
+     cv::Mat colored = applycolormapping(corrected_8bit, ColorMap::WINTER);
 
      displayFrames(corrected_8bit, "Raw");
-     displayFrames(polarized,"Processed");
+     displayFrames(colored,"winter");
 
      if (cv::waitKey(30) == 'q') break;
   }

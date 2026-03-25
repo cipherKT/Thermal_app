@@ -72,3 +72,24 @@ cv::Mat applyAGC(const cv::Mat &frame, float clip_percentile){
 
     return result;
 }
+
+cv::Mat applycolormapping(const cv::Mat &frame, ColorMap color_map){
+
+    if (color_map ==  ColorMap::GREY) return frame;
+
+    cv::Mat result;
+    int cv_colormap;
+    switch (color_map) {
+        case ColorMap::HOT: cv_colormap = cv::COLORMAP_HOT; break;
+        case ColorMap::INFERNO: cv_colormap = cv::COLORMAP_INFERNO; break;
+        case ColorMap::PLASMA: cv_colormap = cv::COLORMAP_PLASMA; break;
+        case ColorMap::WINTER: cv_colormap = cv::COLORMAP_WINTER; break;
+        case ColorMap::JET: cv_colormap = cv::COLORMAP_JET; break;
+        case ColorMap::RAINBOW: cv_colormap = cv::COLORMAP_RAINBOW; break;
+        default: return frame;
+
+    }
+
+    cv::applyColorMap(frame, result, cv_colormap);
+    return result;
+}
