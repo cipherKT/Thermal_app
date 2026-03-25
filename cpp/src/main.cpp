@@ -1,10 +1,14 @@
 #include <iostream>
+#include <chrono>
 #include <opencv2/opencv.hpp>
+#include <ratio>
+#include <stdexcept>
 
 #include "frame_io.h"
 #include "display.h"
 #include "processor.h"
 #include "bad_pixel.h"
+#include "overlay.h"
 
 namespace fs = std::filesystem;
 
@@ -30,6 +34,13 @@ int main(){
       saveBadPixelMap(bad_pixels,bpc_map_path);
   }
 
+  OverlayConfig overlay_config;
+  overlay_config.show_reticle = true;
+  overlay_config.show_grid = true;
+  overlay_config.show_fps = true;
+  overlay_config.show_timestamp = true;
+  overlay_config.reticle_style = ReticleStyle::TACTICAL;
+  overlay_config.color = cv::Scalar(0,255,0);
 
   // display loop
   for (const auto&filepath: frame_paths){
@@ -40,12 +51,20 @@ int main(){
          continue;
      }
 
+     auto loop_start = std::chrono::high_resolution_clock::now();
+
      cv::Mat corrected = correctBadPixels(frame, bad_pixels);
      cv::Mat corrected_8bit = converTo8bit(corrected);
-     cv::Mat colored = applycolormapping(corrected_8bit, ColorMap::WINTER);
+     cv::Mat colored = applycolormapping(corrected_8bit, ColorMap::RAINBOW);
+
+     auto loop_end = std::chrono::high_resolution_clock::now();
+     double elapsed = std::chrono::duration<double, std::milli>(loop_end - loop_start).count();
+     double fps = 1000.0 / elapsed;
+
+     drawOverlay(colored,overlay_config, fps);
 
      displayFrames(corrected_8bit, "Raw");
-     displayFrames(colored,"winter");
+     displayFrames(colored,"processed");
 
      if (cv::waitKey(30) == 'q') break;
   }
